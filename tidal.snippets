@@ -47,6 +47,8 @@ endsnippet
 
 
 ####################
+# Random Functions
+####################
 snippet rand "Factorial => Pattern a"
 rand  
 endsnippet
@@ -72,6 +74,109 @@ perlinWith ${1:double} ${2:double}
 endsnippet
 
 ####################
+# Control Functions
+####################
+snippet accelerate "Pattern Double -> ControlPattern"
+accelerate "${1:double}"
+endsnippet
+
+snippet attack "Pattern Double -> ControlPattern"
+attack "${1:double}"
+endsnippet
+
+snippet bandf "Pattern Double -> ControlPattern"
+bandf "${1:double}"
+endsnippet
+
+snippet bandq "Pattern Double -> ControlPattern"
+bandq "${1:double}"
+endsnippet
+
+snippet begin "Pattern Double -> ControlPattern"
+begin "${1:double}"
+endsnippet
+
+snippet bpf "Pattern Double -> ControlPattern"
+bpf "${1:double}"
+endsnippet
+
+snippet bpq "Pattern Double -> ControlPattern"
+bpq "${1:double}"
+endsnippet
+
+snippet coarse "Pattern Int -> ControlPattern"
+coarse "${1:int}"
+endsnippet
+
+snippet crush "Pattern Double -> ControlPattern"
+crush "${1:double}"
+endsnippet
+
+snippet cut "Pattern Int -> ControlPattern"
+cut "${1:int}"
+endsnippet
+
+snippet cutoff "Pattern Double -> ControlPattern"
+cutoff "${1:double}"
+endsnippet
+
+snippet delay "Pattern Double -> ControlPattern"
+delay "${1:double}"
+endsnippet
+
+snippet delayfb "Pattern Double -> ControlPattern"
+delayfb "${1:double}"
+endsnippet
+
+snippet delaytime "Pattern Double -> ControlPattern"
+delaytime "${1:double}"
+endsnippet
+
+snippet end "Pattern Double -> ControlPattern"
+end "${1:double}"
+endsnippet
+
+snippet gain "Pattern Double -> ControlPattern"
+gain "${1:double}"
+endsnippet
+
+snippet hcutoff "Pattern Double -> ControlPattern"
+hcutoff "${1:double}"
+endsnippet
+
+snippet hpf "Pattern Double -> ControlPattern"
+hpf "${1:double}"
+endsnippet
+
+snippet hresonance "Pattern Double -> ControlPattern"
+hresonance "${1:double}"
+endsnippet
+
+snippet hpq "Pattern Double -> ControlPattern"
+hpq "${1:double}"
+endsnippet
+
+snippet leslie "Pattern Double -> ControlPattern"
+leslie "${1:double}"
+endsnippet
+
+snippet loop "Pattern Double -> ControlPattern"
+loop "${1:double}"
+endsnippet
+
+snippet lpf "Pattern Double -> ControlPattern"
+lpf "${1:double}"
+endsnippet
+
+snippet n "Pattern Int -> ControlPattern"
+n "${1:int}"
+endsnippet
+
+snippet nudge "Pattern Double -> ControlPattern"
+nudge "${1:double}"
+endsnippet
+
+####################
 snippet sound "Pattern String -> ControlPattern"
 s "${1:samples}" 
 endsnippet
@@ -88,7 +193,7 @@ do
   let s2 = silence 
          # gain s2G 
          # orbit 1
-  d1 $ stack [s1, s2] 
+  d1 $ stack [s1, s2] # masterGain
 endsnippet
 
 
