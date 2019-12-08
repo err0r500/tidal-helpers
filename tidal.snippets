@@ -1,0 +1,94 @@
+# Oscilators
+snippet silence "Pattern a"
+silence
+endsnippet
+
+snippet sine "Fractional => Pattern a"
+sine 
+endsnippet
+
+snippet cosine "Fractional => Pattern a"
+cosine 
+endsnippet
+
+snippet square "Fractional => Pattern a"
+square 
+endsnippet
+
+snippet tri "Fractional => Pattern a"
+tri 
+endsnippet
+
+snippet saw "Fractional => Pattern a"
+saw 
+endsnippet
+
+snippet isaw "Fractional => Pattern a"
+isaw  
+endsnippet
+
+
+####################
+snippet choose "[a] -> Pattern a"
+choose [${1:any}] 
+endsnippet
+
+snippet chooseBy "Pattern Double -> [a] -> Pattern a"
+chooseBy "${1:doubles}" [${2:any}] 
+endsnippet
+
+snippet wchoose "[(a, Double)] -> Pattern a"
+wchoose [(${1:any}, ${2:double})] 
+endsnippet
+
+snippet wChooseBy "Pattern Double -> [(a,Double)] -> Pattern a"
+wChooseBy "${1:doubles}" [(${2:any}, ${3:double})] 
+endsnippet
+
+
+####################
+snippet rand "Factorial => Pattern a"
+rand  
+endsnippet
+
+snippet	irand "Num a => Int -> Pattern a"
+irand 
+endsnippet
+
+snippet perlin "Pattern Double"
+perlin
+endsnippet
+
+snippet perlinWith "Pattern Double -> Pattern Double"
+perlinWith ${1:double}
+endsnippet
+
+snippet perlin2 "Pattern Double -> Pattern Double"
+perlinWith ${1:double}
+endsnippet
+
+snippet perlin2With "Pattern Double -> Pattern Double -> Pattern Double"
+perlinWith ${1:double} ${2:double}
+endsnippet
+
+####################
+snippet sound "Pattern String -> ControlPattern"
+s "${1:samples}" 
+endsnippet
+
+
+snippet	bootstrap "bootstrap a 2-stack project"
+do
+  let masterGain = 1
+  let s1G = 1
+  let s2G = 1
+  let s1 = silence 
+         # gain s1G 
+         # orbit 0
+  let s2 = silence 
+         # gain s2G 
+         # orbit 1
+  d1 $ stack [s1, s2] 
+endsnippet
+
+
