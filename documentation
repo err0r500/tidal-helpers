@@ -34,7 +34,7 @@ d1 $ sound "bd*8" # pan (slow 2 isaw)
 
 
 rand :: Fractional a => Pattern a
-An infinitely detailed stream of (pseudo-)random numbers. See[ the rand page for more details.
+An infinitely detailed stream of (pseudo-)random numbers.
 d1 $ sound "bd*8" # pan rand
 
 
@@ -419,7 +419,6 @@ With this in mind, setting the second argument of every' to 0 gives the equivale
 
 fix :: (ControlPattern -> ControlPattern) -> ControlPattern -> ControlPattern -> ControlPattern
 The fix function applies another function to matching events in a pattern of controls.
-For example:
 d1 $ slow 2 $ fix (# crush 3) (n "[1,4]") $ n "0 1 2 3 4 5 6" # sound "arpy"
 The above only adds the crush control when the n control is set to either 1 or 4.
 You can be quite specific, for example fix (hurry 2) (s "drum" # n "1") to apply the function hurry 2 to sample 1 of the drum sampleset, and leave the rest as they are.
@@ -874,7 +873,6 @@ d1 $ chew 4 "0 1*2 2*2 [~ 3]" $ n "0 .. 7" # sound "drum"
 
 deconstruct :: Int -> Pattern String -> String
 The deconstruct function displays the given number of steps within a pattern of strings. It's useful for visualising simple patterns, for example for seeing what a euclidean pattern is doing.
-For example:
 deconstruct 8 "[bd(3,8), sn(5,8,2)]"
 returns:
 "[bd, sn] sn ~ [bd, sn] sn ~ [bd, sn] ~"
@@ -889,7 +887,6 @@ d1 $ n (slow 2 $ segment 16 $ range 0 32 $ sine) # sound "amencutup"
 
 euclid :: Pattern Int -> Pattern Int -> Pattern a -> Pattern a
 euclid creates a Euclidean rhythmic structure. It produces the same output as the Euclidean pattern string.
-For example:
 d1 $ euclid 3 8 $ sound "cp"
 ... is the same as ...
 d1 $ sound "cp(3,8)"
@@ -905,7 +902,6 @@ The example above creates a kick snare pattern with ghost notes applied to the s
 
 scale :: Num a => Pattern String -> Pattern Int -> Pattern a
 The scale function interprets a pattern of note numbers into a particular named scale.
-For example:
 d1 $ jux rev $ chunk 4 (fast 2 . (|- n 12)) $ off 0.25 (|+ 7) $ struct (iter 4 "t(5,8)")
   $ n (scale "ritusen" "0 .. 7") # sound "superpiano"
 Please note that prior to Tidal version 1.0.0, scale had a very different function as a range operator. Veteran users will need to switch to using range for this functionality.
@@ -1171,7 +1167,6 @@ Note that striate uses the begin and end parameters internally. This means that 
 snowball :: Int -> (Pattern a -> Pattern a -> Pattern a) -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
 The snowball function recursively combines a pattern with a modified version itself using a combination function over the given number of cycles. Each passing cycle is one level deeper in the recursion and is based of all the previous cycles.
 It takes 3 arguments. First a number representing an iteration limit. Second, an operator to combine the patterns with. Third, a function to modify the patterns with.
-For example:
 d1 $ note (scale "minor" $ snowball 4 (+) (slow 2) $ (run 3)) #sound "gtr" #gain 0.9
 For the first cycle, we hear the result of the `run` function. In the second cycle we hear the previous pattern added to a slowed version of itself. The third cycle we hear the result of cycle 2 added to a slowed version of itself. Same goes for the 4th cycle. The result is a rising wandering melody over four cycles. (note that it takes more than 4 cycles to repeat as the base pattern is slowed by 2 again and again until the iteration limit is reached.
 This, as the name suggests, can quickly get out of hand.
