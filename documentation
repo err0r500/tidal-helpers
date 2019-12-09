@@ -3,24 +3,98 @@ this file is a consolidation of the official tidalCycles documentation : https:/
 
 type Time = Rational
 
-sine :: Fractional a => Pattern a
-A sine wave.
-d1 $ sound "bd*8" # pan sine
+## CORE
+
+append :: Pattern a -> Pattern a -> Pattern a
+slowAppend :: Pattern a -> Pattern a -> Pattern a
+append combines two patterns into a new pattern, where cycles alternate between the first and second pattern.
+d1 $ append (sound "bd*2 sn") (sound "arpy jvbass*2")
 
 
-cosine :: Fractional a => Pattern a
-A cosine wave, i.e. a sine shifted in time by a quarter of a cycle.
-d1 $ sound "bd*8" # pan cosine # speed (sine + 0.5)
+cat :: [Pattern a] -> Pattern a
+slowcat :: [Pattern a] -> Pattern a
+cat concatenates a list of patterns into a new pattern; each pattern in the list will maintain its original duration.
+d1 $ cat [sound "bd*2 sn", sound "arpy jvbass*2"]
+d1 $ cat [sound "bd*2 sn", sound "arpy jvbass*2", sound "drum*2"]
+d1 $ cat [sound "bd*2 sn", sound "jvbass*3", sound "drum*2", sound "ht mt"]
 
 
-square :: Fractional a => Pattern a
-A squarewave, starting at 0, then going up to 1 halfway through a cycle.
-d1 $ sound "bd*8" # pan (cat [square, sine])
+every :: Pattern Int -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
+every allows you to apply another function conditionally. It takes three inputs, how often the function should be applied (e.g. 3 to apply it every 3 cycles), the function to be applied, and the pattern you are applying it to.
+For example to reverse a pattern every three cycles (and for the other two play it normally):
+d1 $ every 3 rev $ n "0 1 [~ 2] 3" # sound "arpy"
+Note that if the function you're applying requires additional parameters itself (such as fast 2 to make a pattern twice as fast), then you'll need to wrap it in parenthesis, like so:
+d1 $ every 3 (fast 2) $ n "0 1 [~ 2] 3" # sound "arpy"
+Otherwise, the every function will think it is being passed too many parameters.
 
 
-tri :: Fractional a => Pattern a
-A triangle wave, starting at 0, then linearly rising to 1 halfway through a cycle, then down again.
-d1 $ sound "bd*16" # speed (slow 2 $ range 0.5 2 tri)
+every' :: Int -> Int -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
+every' is a generalisation of every, taking one additional argument. The additional argument allows you to offset the function you are applying.
+For example, every' 3 0 (fast 2) will speed up the cycle on cycles 0,3,6,… whereas every' 3 1 (fast 2) will transform the pattern on cycles 1,4,7,…
+With this in mind, setting the second argument of every' to 0 gives the equivalent every function. For example, every 3 is equivalent to every' 3 0.
+
+
+fast :: Pattern Time -> Pattern a -> Pattern a
+density :: Pattern Time -> Pattern a -> Pattern a
+fast speeds up a pattern. For example, the following will play the sound pattern "bd sn kurt" twice as fast (i.e. so it repeats twice per cycle), and the vowel pattern three times as fast:
+d1 $ sound (fast 2 "bd sn kurt")
+   # fast 3 (vowel "a e o")
+The first parameter can be patterned, for example to play the pattern at twice the speed for the first half of each cycle and then four times the speed for the second half:
+d1 $ fast "2 4" $ sound "bd sn kurt cp"
+
+
+fastAppend :: Pattern a -> Pattern a -> Pattern a
+fastAppend works like append described above, but each pair of cycles from the two patterns are squashed to fit a single cycle.
+d1 $ fastAppend (sound "bd*2 sn") (sound "arpy jvbass*2")
+
+
+fastcat :: [Pattern a] -> Pattern a
+fastcat works like cat above, but squashes all the patterns to fit a single cycle. Examples:
+d1 $ fastcat [sound "bd*2 sn", sound "arpy jvbass*2"]
+d1 $ fastcat [sound "bd*2 sn", sound "arpy jvbass*2", sound "drum*2"]
+d1 $ fastcat [sound "bd*2 sn", sound "jvbass*3", sound "drum*2", sound "ht mt"]
+
+
+foldEvery :: [Int] -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
+foldEvery transforms a pattern with a function, once per any of the given number of cycles. If a particular cycle is the start of more than one of the given cycle periods, then it it applied more than once. It is similar to chaining multiple every functions together.
+d1 $ foldEvery [3, 4, 5] (fast 2) $ sound "bd sn kurt"
+this is equal to:
+d1 $ every 3 (fast 2) $ every 4 (fast 2) $ every 5 (fast 2) $ sound "bd sn kurt"
+
+
+isaw :: Fractional a => Pattern a
+An inverted sawtooth, starting at 1, then linearly falling to 0 over one cycle, then jumping back to 1.
+d1 $ sound "bd*8" # pan (slow 2 isaw)
+
+
+overlay :: Pattern a -> Pattern a -> Pattern a
+The overlay function is similar to cat described above, but combines two patterns, rather than a list of patterns. For example:
+d1 $ sound (overlay "bd sn:2" "cp*3")
+...is the same as...
+d1 $ sound "[bd sn:2, cp*3]"
+
+
+repeatCycles :: Int -> Pattern a -> Pattern
+repeatCycles is function that repeats each cycle of a given pattern a given number of times.. It takes two inputs, the number of repeats, and the pattern you are transforming.
+For example, to repeat each random cycle of notes three times:
+d1 $ repeatCycles 3 $ sound "arpy(5,8)" # n (irand 8)
+
+
+rev :: Pattern a -> Pattern a
+rev returns a 'reversed' version of the given pattern.
+For example rev "1 [~ 2] ~ 3" is equivalent to rev "3 ~ [2 ~] 1".
+Note that rev reverses on a cycle-by-cycle basis. This means that rev (slow 2 "1 2 3 4") would actually result in (slow 2 "2 1 4 3"). This is because the slow 2 makes the repeating pattern last two cycles, each of which is reversed independently.
+In practice rev is generally used with conditionals, for example with every:
+d1 $ every 3 rev $ n "0 1 [~ 2] 3" # sound "arpy"
+or jux:
+d1 $ jux rev $ n (iter 4 "0 1 [~ 2] 3") # sound "arpy"
+
+
+run :: (Num a, Enum a) => Pattern a -> Pattern a
+The run function generates a pattern representing a cycle of numbers from 0 to n-1 inclusive. Notably used to ‘run’ through a folder of samples in order:
+d1 $ n (run 8) # sound "amencutup"
+The first parameter to run can be given as a pattern:
+d1 $ n (run "<4 8 4 6>") # sound "amencutup"
 
 
 saw :: Fractional a => Pattern a
@@ -28,9 +102,103 @@ A sawtooth wave starting at 0, then linearly rising to 1 over one cycle, then ju
 d1 $ sound "bd*8" # pan (slow 2 saw)
 
 
-isaw :: Fractional a => Pattern a
-An inverted sawtooth, starting at 1, then linearly falling to 0 over one cycle, then jumping back to 1.
-d1 $ sound "bd*8" # pan (slow 2 isaw)
+scan :: (Num a, Enum a) => Pattern a -> Pattern a
+scan is similar to run, but starts at 1 for the first cycle, adding an additional number each cycle until it reaches n
+d1 $ n (scan 8) # sound "amencutup"
+
+
+silence :: Pattern a
+silence is the empty pattern, it contains nothing, nada. It's still useful, though!
+d1 $ sound "bd(3,8)" -- make a sound
+d1 $ silence -- stop it again
+d1 $ cat [sound "bd(3,8)", silence] -- silence every other pattern
+
+
+sine :: Fractional a => Pattern a
+A sine wave.
+d1 $ sound "bd*8" # pan sine
+
+
+slow :: Pattern Time -> Pattern a -> Pattern a
+slow slows down a pattern. For example, the following will play the sound pattern "bd sn kurt" twice as slow (i.e. so it repeats once every two cycles), and the vowel pattern three times as slow:
+d1 $ sound (slow 2 "bd sn kurt") # slow 3 (vowel "a e o")
+
+
+square :: Fractional a => Pattern a
+A squarewave, starting at 0, then going up to 1 halfway through a cycle.
+d1 $ sound "bd*8" # pan (cat [square, sine])
+
+
+stack :: [Pattern a] -> Pattern a
+stack takes a list of patterns and combines them into a new pattern by layering them up - effectively playing all of the patterns in the list simultaneously.
+d1 $ stack [ 
+  sound "bd bd*2", 
+  sound "hh*2 [sn cp] cp future*4", 
+  sound "arpy" +| n "0 .. 15"
+]
+This is particularly useful if you want to apply a function or synth control pattern to multiple patterns at once:
+d1 $ whenmod 5 3 (striate 3) $ stack [ 
+  sound "bd bd*2", 
+  sound "hh*2 [sn cp] cp future*4", 
+  sound "arpy" +| n "0 .. 15"
+] # speed "[[1 0.8], [1.5 2]*2]/3"
+
+
+tri :: Fractional a => Pattern a
+A triangle wave, starting at 0, then linearly rising to 1 halfway through a cycle, then down again.
+d1 $ sound "bd*16" # speed (slow 2 $ range 0.5 2 tri)
+
+
+when :: (Int -> Bool) -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
+Only when the given test function returns True the given pattern transformation is applied. The test function will be called with the current cycle as a number.
+d1 $ when ((elem '4').show) (striate 4) $ sound "hh hc"
+The above will only apply striate 4 to the pattern if the current cycle number contains the number 4. So the fourth cycle will be striated and the fourteenth and so on. Expect lots of striates after cycle number 399.
+
+
+zoom :: (Time, Time) -> Pattern a -> Pattern a
+Plays a portion of a pattern, specified by the beginning and end of a time span (known as an 'arc'). The new resulting pattern is played over the time period of the original pattern:
+d1 $ zoom (0.25, 0.75) $ sound "bd*2 hh*3 [sn bd]*2 drum"
+In the pattern above, zoom is used with an arc from 25% to 75%. It is equivalent to this pattern:
+d1 $ sound "hh*3 [sn bd]*2"
+Here’s an example of it being used with a conditional:
+d1 $ every 4 (zoom (0.25, 0.75)) $ sound "bd*2 hh*3 [sn bd]*2 drum"
+
+
+
+## CONTROL
+
+
+
+
+==>
+
+randcat :: [Pattern a] -> Pattern a
+randcat is similar to cat, but rather than playing the given patterns in order, it picks them at random. For example:
+d1 $ randcat [sound "bd*2 sn", sound "jvbass*3", sound "drum*2", sound "ht mt"]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 rand :: Fractional a => Pattern a
@@ -90,13 +258,6 @@ d1
  $ s "[arpy*32]"
  # lpf (range 60 5000 $ perlin2With (cosine*2) (sine*2))
  # lpq 0.3
-
-
-silence :: Pattern a
-silence is the empty pattern, it contains nothing, nada. It's still useful, though!
-d1 $ sound "bd(3,8)" -- make a sound
-d1 $ silence -- stop it again
-d1 $ cat [sound "bd(3,8)", silence] -- silence every other pattern
 
 
 accelerate :: Pattern Double -> ControlPattern
@@ -402,33 +563,12 @@ sometimesBy 0.93 (# speed 2)
 to apply the speed control on average 93 times out of a hundred.
 
 
-every :: Pattern Int -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
-every is function, that allows you to apply another function conditionally. It takes three inputs, how often the function should be applied (e.g. 3 to apply it every 3 cycles), the function to be applied, and the pattern you are applying it to.
-For example to reverse a pattern every three cycles (and for the other two play it normally):
-d1 $ every 3 rev $ n "0 1 [~ 2] 3" # sound "arpy"
-Note that if the function you're applying requires additional parameters itself (such as fast 2 to make a pattern twice as fast), then you'll need to wrap it in parenthesis, like so:
-d1 $ every 3 (fast 2) $ n "0 1 [~ 2] 3" # sound "arpy"
-Otherwise, the every function will think it is being passed too many parameters.
-
-
-every' :: Int -> Int -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
-every' is a generalisation of every, taking one additional argument. The additional argument allows you to offset the function you are applying.
-For example, every' 3 0 (fast 2) will speed up the cycle on cycles 0,3,6,… whereas every' 3 1 (fast 2) will transform the pattern on cycles 1,4,7,…
-With this in mind, setting the second argument of every' to 0 gives the equivalent every function. For example, every 3 is equivalent to every' 3 0.
-
 
 fix :: (ControlPattern -> ControlPattern) -> ControlPattern -> ControlPattern -> ControlPattern
 The fix function applies another function to matching events in a pattern of controls.
 d1 $ slow 2 $ fix (# crush 3) (n "[1,4]") $ n "0 1 2 3 4 5 6" # sound "arpy"
 The above only adds the crush control when the n control is set to either 1 or 4.
 You can be quite specific, for example fix (hurry 2) (s "drum" # n "1") to apply the function hurry 2 to sample 1 of the drum sampleset, and leave the rest as they are.
-
-
-foldEvery :: [Int] -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
-foldEvery transforms a pattern with a function, once per any of the given number of cycles. If a particular cycle is the start of more than one of the given cycle periods, then it it applied more than once. It is similar to chaining multiple every functions together.
-d1 $ foldEvery [3, 4, 5] (fast 2) $ sound "bd sn kurt"
-this is equal to:
-d1 $ every 3 (fast 2) $ every 4 (fast 2) $ every 5 (fast 2) $ sound "bd sn kurt"
 
 
 ifp :: (Int -> Bool) -> (Pattern a -> Pattern a) -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
@@ -607,36 +747,11 @@ d1 $ slow 2 $ degradeBy 0.9 $ sound "[[[feel:5*8,feel*3] feel:3*8], feel*4]"
    # speed "2"
 
 
-cat :: [Pattern a] -> Pattern a
-cat, (also known as slowcat, to match with fastcat defined below) concatenates a list of patterns into a new pattern; each pattern in the list will maintain its original duration. For example:
-d1 $ cat [sound "bd*2 sn", sound "arpy jvbass*2"]
-d1 $ cat [sound "bd*2 sn", sound "arpy jvbass*2", sound "drum*2"]
-d1 $ cat [sound "bd*2 sn", sound "jvbass*3", sound "drum*2", sound "ht mt"]
-
-
-fastcat :: [Pattern a] -> Pattern a
-fastcat works like cat above, but squashes all the patterns to fit a single cycle. Examples:
-d1 $ fastcat [sound "bd*2 sn", sound "arpy jvbass*2"]
-d1 $ fastcat [sound "bd*2 sn", sound "arpy jvbass*2", sound "drum*2"]
-d1 $ fastcat [sound "bd*2 sn", sound "jvbass*3", sound "drum*2", sound "ht mt"]
-
-
-randcat :: [Pattern a] -> Pattern a
-randcat is similar to cat, but rather than playing the given patterns in order, it picks them at random. For example:
-d1 $ randcat [sound "bd*2 sn", sound "jvbass*3", sound "drum*2", sound "ht mt"]
-
-
-randslice :: Pattern Int -> ControlPattern -> ControlPattern
+ /randslice :: Pattern Int -> ControlPattern -> ControlPattern
 randslice chops the sample into the given number of pieces and then plays back a random one each cycle:
 d1 $ randslice 32 $ sound "bev"
 Use fast to get more than one per cycle;
 d1 $ fast 4 $ randslice 32 $ sound "bev"
-
-
-repeatCycles :: Int -> Pattern a -> Pattern
-repeatCycles is function that repeats each cycle of a given pattern a given number of times.. It takes two inputs, the number of repeats, and the pattern you are transforming.
-For example, to repeat each random cycle of notes three times:
-d1 $ repeatCycles 3 $ sound "arpy(5,8)" # n (irand 8)
 
 
 scramble :: Int -> Pattern a -> Pattern a
@@ -683,15 +798,6 @@ d1 $ chunk 4 (hurry 2) $ sound "bd sn:2 [~ bd] sn:2"
 
 chunk' :: Int -> (Pattern b -> Pattern b) -> Pattern b -> Pattern b
 chunk' does the same as chunk but cycles through the parts in the reverse direction.
-
-
-density :: Pattern Time -> Pattern a -> Pattern a
-fast :: Pattern Time -> Pattern a -> Pattern a
-fast speeds up a pattern. For example, the following will play the sound pattern "bd sn kurt" twice as fast (i.e. so it repeats twice per cycle), and the vowel pattern three times as fast:
-d1 $ sound (fast 2 "bd sn kurt")
-   # fast 3 (vowel "a e o")
-The first parameter can be patterned, for example to play the pattern at twice the speed for the first half of each cycle and then four times the speed for the second half:
-d1 $ fast "2 4" $ sound "bd sn kurt cp"
 
 
 (<~) :: Pattern Time -> Pattern a -> Pattern a
@@ -753,21 +859,6 @@ d1 $ slow 2 $ sound "arpy:0 arpy:1 arpy:2 arpy:3 arpy:3 arpy:2 arpy:1 arpy:0"
 d1 $ every 2 rev $ sound "arpy:0 arpy:1 arpy:2 arpy:3"
 
 
-rev :: Pattern a -> Pattern a
-rev returns a 'reversed' version of the given pattern.
-For example rev "1 [~ 2] ~ 3" is equivalent to rev "3 ~ [2 ~] 1".
-Note that rev reverses on a cycle-by-cycle basis. This means that rev (slow 2 "1 2 3 4") would actually result in (slow 2 "2 1 4 3"). This is because the slow 2 makes the repeating pattern last two cycles, each of which is reversed independently.
-In practice rev is generally used with conditionals, for example with every:
-d1 $ every 3 rev $ n "0 1 [~ 2] 3" # sound "arpy"
-or jux:
-d1 $ jux rev $ n (iter 4 "0 1 [~ 2] 3") # sound "arpy"
-
-
-slow :: Pattern Time -> Pattern a -> Pattern a
-slow slows down a pattern. For example, the following will play the sound pattern "bd sn kurt" twice as slow (i.e. so it repeats once every two cycles), and the vowel pattern three times as slow:
-d1 $ sound (slow 2 "bd sn kurt") # slow 3 (vowel "a e o")
-
-
 stripe :: Pattern Int -> Pattern a -> Pattern a
 The stripe function repeats a pattern at random speeds. The first parameter gives the number of cycles to operate over, for example stripe 2 will repeat a pattern twice, over two cycles. Each cycle will be played at a random speed, but in such a way that the total duration will be the same.
 For example in the following example, the start of every third repetition of the d1 pattern will match with the clap on the d2 pattern.
@@ -790,15 +881,6 @@ will delay every other "hh" 1/3 of the way to the next "hh".
 
 swing :: Pattern Time -> Pattern a -> Pattern a
 swing is an alias for swingBy (1/3)
-
-
-zoom :: (Time, Time) -> Pattern a -> Pattern a
-Plays a portion of a pattern, specified by the beginning and end of a time span (known as an 'arc'). The new resulting pattern is played over the time period of the original pattern:
-d1 $ zoom (0.25, 0.75) $ sound "bd*2 hh*3 [sn bd]*2 drum"
-In the pattern above, zoom is used with an arc from 25% to 75%. It is equivalent to this pattern:
-d1 $ sound "hh*3 [sn bd]*2"
-Here’s an example of it being used with a conditional:
-d1 $ every 4 (zoom (0.25, 0.75)) $ sound "bd*2 hh*3 [sn bd]*2 drum"
 
 
 anticipate :: Time -> [ControlPattern] -> ControlPattern
@@ -991,28 +1073,6 @@ The loopAt takes care of changing the speed of sample playback so that the sampl
 d1 $ loopAt 8 $ rev $ chop 32 $ sound "bev"
 
 
-stack :: [Pattern a] -> Pattern a
-stack takes a list of patterns and combines them into a new pattern by layering them up - effectively playing all of the patterns in the list simultaneously.
-d1 $ stack [ 
-  sound "bd bd*2", 
-  sound "hh*2 [sn cp] cp future*4", 
-  sound "arpy" +| n "0 .. 15"
-]
-This is particularly useful if you want to apply a function or synth control pattern to multiple patterns at once:
-d1 $ whenmod 5 3 (striate 3) $ stack [ 
-  sound "bd bd*2", 
-  sound "hh*2 [sn cp] cp future*4", 
-  sound "arpy" +| n "0 .. 15"
-] # speed "[[1 0.8], [1.5 2]*2]/3"
-
-
-overlay :: Pattern a -> Pattern a -> Pattern a
-The overlay function is similar to cat described above, but combines two patterns, rather than a list of patterns. For example:
-d1 $ sound (overlay "bd sn:2" "cp*3")
-...is the same as...
-d1 $ sound "[bd sn:2, cp*3]"
-
-
 (<>) :: Pattern a -> Pattern a -> Pattern a
 <> is the same as overlay described above but in operator form. For example:
 d1 $ sound ("bd sn:2" <> "cp*3")
@@ -1040,18 +1100,6 @@ The result is equivalent of
 The first parameter is the number of steps, and may be given as a pattern, for example:
 d1 $ rot "<0 0 1 3>" $ n "0 ~ 1 2 0 2 ~ 3*2" # sound "drum"
 The above will not rotate the pattern for the first two cycles, will rotate it by one the third cycle, and by three the fourth cycle.
-
-
-run :: (Num a, Enum a) => Pattern a -> Pattern a
-The run function generates a pattern representing a cycle of numbers from 0 to n-1 inclusive. Notably used to ‘run’ through a folder of samples in order:
-d1 $ n (run 8) # sound "amencutup"
-The first parameter to run can be given as a pattern:
-d1 $ n (run "<4 8 4 6>") # sound "amencutup"
-
-
-scan :: (Num a, Enum a) => Pattern a -> Pattern a
-scan is similar to run, but starts at 1 for the first cycle, adding an additional number each cycle until it reaches n
-d1 $ n (scan 8) # sound "amencutup"
 
 
 seqP :: [(Time, Time, Pattern a)] -> Pattern a
@@ -1185,3 +1233,19 @@ d1 $ soak 4 (iter 8. slow 2 .ply 3) $ euclid 3 5 $ sound "bd sn"
 spin :: Pattern Int -> ControlPattern -> ControlPattern
 spin will play the given number of copies of the given control pattern at once. For n copies, each successive copy will be offset in time by an additional 1/n of a cycle, and also panned in space by an additional n1/n</source>. This function works particularly well on multichannel systems.
 d1 $ slow 3 $ spin 4 $ sound "drum*3 tabla:4 [arpy:2 ~ arpy] [can:2 can:3]"
+
+
+arpeggiate :: Pattern a -> Pattern a
+arpg :: Pattern a -> Pattern a
+The arpeggiate (alias arpg) function spreads chords of note numbers over time.
+For example, using the 1.0 chord name notation & older list notation:
+d1 $ n (arpg "'major7 [0,4,7,11]") # sound "superpiano"
+
+
+arp :: Pattern String -> Pattern a -> Pattern a The arp function takes an additional pattern of arpeggiate modes.
+For example, using the 1.0 chord name notation (root note / chord type / additional notes above the chord):
+d1 $ n (arp "<up down diverge>" "<a'm9'8 e'7sus4'8>") # sound "superpiano"
+The different arpeggiate modes are:
+up down updown downup up&down down&up converge diverge disconverge pinkyup pinkyupdown thumbup thumbupdown
+The different chords available are:
+major maj minor min major7 maj7 dom7 minor7 min7 aug dim dim7 one 1 five 5 plus sharp5 msharp5 sus2 sus4 six 6 m6 sevenSus2 7sus2 sevenSus4 7sus4 sevenFlat5 7f5 m7flat5 m7f5 sevenSharp5 7s5 m7sharp5 m7s5 nine m9 m7sharp9 m7s9 maj9 nineSus4 ninesus4 9sus4 sixby9 6by9 m6by9 sevenFlat9 7f9 m7flat9 m7f9 sevenFlat10 7f10 nineSharp5 9s5 m9sharp5 m9s5 sevenSharp5flat9 7s5f9 m7sharp5flat9 eleven 11 m11 maj11 elevenSharp 11s m11sharp m11s thirteen 13 m13
