@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:smash
+# name:Pattern Int -> [Pattern Time] -> ControlPattern -> ControlPattern
+# --
+smash "${1:int}" ["${2:time}"] 

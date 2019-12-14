@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:stut
+# name:Pattern Integer -> Pattern Double -> Pattern Rational -> ControlPattern -> ControlPattern
+# --
+stut "${1:int}" "${2:double}" "${3:rational}" 

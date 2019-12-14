@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:shuffle
+# name:Int -> Pattern a -> Pattern a
+# --
+shuffle ${1:int} 

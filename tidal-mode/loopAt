@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:loopAt
+# name:Pattern Time -> ControlPattern -> ControlPattern
+# --
+loopAt "${1:timw}" 

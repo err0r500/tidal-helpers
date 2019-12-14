@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:linger
+# name:Pattern Time -> Pattern a -> Pattern a
+# --
+linger "${1:time}" 

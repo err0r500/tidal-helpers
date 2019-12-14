@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:almostNever
+# name:(Pattern a -> Pattern a) -> Pattern a -> Pattern a  -- 10%
+# --
+almostNever ${1:func} 

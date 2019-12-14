@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:waveloss
+# name:Pattern Double -> ControlPattern
+# --
+waveloss "${1:double}" 

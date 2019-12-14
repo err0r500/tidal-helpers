@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:someCycles
+# name:(Pattern a -> Pattern a) -> Pattern a -> Pattern a
+# --
+someCycles ${1:func} 

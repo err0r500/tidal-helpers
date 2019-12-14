@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:mask
+# name:Pattern Bool -> Pattern a -> Pattern a
+# --
+mask "${1:bool}" 

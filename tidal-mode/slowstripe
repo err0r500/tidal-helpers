@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:slowstripe
+# name:Pattern Int -> Pattern a -> Pattern a
+# --
+slowstripe "${1:int}" 

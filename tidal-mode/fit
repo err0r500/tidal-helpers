@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:fit
+# name:Int -> [a] -> Pattern Int -> Pattern a
+# --
+fit ${1:int} [ "${1:a}" ] 

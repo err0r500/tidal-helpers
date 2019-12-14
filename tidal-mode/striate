@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:striate
+# name:Pattern Int -> ControlPattern -> ControlPattern
+# --
+striate "${1:int}" 

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:cycleChoose
+# name:[a] -> Pattern a
+# --
+cycleChoose [${1:any}] 

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:stutWith
+# name:Pattern Int -> Pattern Time -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
+# --
+stutWith "${1:int}" "${2:time}" "${3:funcPattern}" 

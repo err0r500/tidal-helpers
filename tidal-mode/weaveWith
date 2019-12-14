@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:weaveWith
+# name:Time -> Pattern a -> [Pattern a -> Pattern a] -> Pattern a
+# --
+weaveWith ${1:time} "${2:pattern}" 

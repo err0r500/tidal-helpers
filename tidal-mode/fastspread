@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:fastspread
+# name:(a -> t -> Pattern b) -> [a] -> t -> Pattern b
+# --
+fastspread (${1:func}) [ "${2:a}" ] 

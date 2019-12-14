@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:interlace
+# name:ControlPattern -> ControlPattern -> ControlPattern
+# --
+interlace "${1:pattern}" 

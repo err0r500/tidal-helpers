@@ -662,7 +662,8 @@ For example, using the 1.0 chord name notation & older list notation:
 d1 $ n (arpg "'major7 [0,4,7,11]") # sound "superpiano"
 
 
-arp :: Pattern String -> Pattern a -> Pattern a The arp function takes an additional pattern of arpeggiate modes.
+arp :: Pattern String -> Pattern a -> Pattern a
+The arp function takes an additional pattern of arpeggiate modes.
 For example, using the 1.0 chord name notation (root note / chord type / additional notes above the chord):
 d1 $ n (arp "<up down diverge>" "<a'm9'8 e'7sus4'8>") # sound "superpiano"
 The different arpeggiate modes are:

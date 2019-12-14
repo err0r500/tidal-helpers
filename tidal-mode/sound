@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:sound
+# name:Pattern String -> ControlPattern
+# --
+sound "${1:string}" 

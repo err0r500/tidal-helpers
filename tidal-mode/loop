@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:loop
+# name:Pattern Double -> ControlPattern
+# --
+loop "${1:double}" 

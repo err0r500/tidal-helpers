@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:vowel
+# name:Pattern String -> ControlPattern
+# --
+vowel "${1:string}" 

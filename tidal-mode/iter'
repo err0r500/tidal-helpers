@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:iter'
+# name:Pattern Int -> Pattern a -> Pattern a
+# --
+iter' "${1:int}" 

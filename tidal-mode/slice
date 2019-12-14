@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:slice
+# name:Pattern Int -> Pattern Int -> ControlPattern -> ControlPattern
+# --
+slice "${1:int}" "${2:int}" 

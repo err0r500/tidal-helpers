@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:perlin2With
+# name:Pattern Double -> Pattern Double -> Pattern Double
+# --
+perlin2with "${1:double}" 

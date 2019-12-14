@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:rangex
+# name:(Floating b, Functor f) => b -> b -> f b -> f b
+# --
+rangex ${1:float} ${2:float}

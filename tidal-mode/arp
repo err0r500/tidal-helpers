@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:arp
+# name:Pattern String -> Pattern a -> Pattern a
+# --
+arp "${1:string}" 

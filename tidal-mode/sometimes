@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:sometimes
+# name:(Pattern a -> Pattern a) -> Pattern a -> Pattern a  -- 50%
+# --
+sometimes ${1:func} 

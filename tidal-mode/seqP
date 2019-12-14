@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:seqP
+# name:[(Time, Time, Pattern a)] -> Pattern a
+# --
+seqP [ ( ${1:time},${2:time},${3:pattern} ) ] 

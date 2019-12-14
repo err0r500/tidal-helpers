@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:lpf
+# name:Pattern Double -> ControlPattern
+# --
+lpf "${1:double}" 

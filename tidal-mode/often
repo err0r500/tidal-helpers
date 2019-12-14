@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:often
+# name:(Pattern a -> Pattern a) -> Pattern a -> Pattern a  -- 75%
+# --
+often ${1:func} 

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:nudge
+# name:Pattern Double -> ControlPattern
+# --
+nudge "${1:double}" 

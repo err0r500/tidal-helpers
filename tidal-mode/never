@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:never
+# name:(Pattern a -> Pattern a) -> Pattern a -> Pattern a  -- 0%
+# --
+never ${1:func} 

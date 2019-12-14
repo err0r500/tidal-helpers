@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:outside
+# name:Pattern Time -> (Pattern a -> Pattern b) -> Pattern a -> Pattern b
+# --
+outside "${1:time}" ${2:funcPattern} 

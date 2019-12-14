@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:discretise
+# name:Pattern Time -> Pattern a -> Pattern a
+# --
+discretise "${1:time}" 

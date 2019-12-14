@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:scramble
+# name:Int -> Pattern a -> Pattern a
+# --
+scramble ${1:int} 

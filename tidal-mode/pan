@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:pan
+# name:Pattern Double -> ControlPattern
+# --
+pan "${1:double}" 

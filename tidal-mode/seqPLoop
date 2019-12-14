@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:seqPLoop
+# name:[(Time, Time, Pattern a)] -> Pattern a
+# --
+seqPLoop [ ( ${1:time},${2:time},${3:pattern} ) ] 

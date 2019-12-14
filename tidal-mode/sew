@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:sew
+# name:Pattern Bool -> Pattern a -> Pattern a -> Pattern a
+# --
+sew "${1:bool}" "${2:pattern}" 

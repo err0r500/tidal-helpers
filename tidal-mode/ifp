@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:ifp
+# name:(Int -> Bool) -> (Pattern a -> Pattern a) -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
+# --
+ifp (${1:funcBool}) (${2:funcPattern}) (${3:funcPattern}) 

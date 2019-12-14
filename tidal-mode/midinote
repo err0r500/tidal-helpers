@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:midinote
+# name:Pattern Double -> ControlPattern
+# --
+midinote "${1:double}" 

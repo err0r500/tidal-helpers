@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:range
+# name:Num a => Pattern a -> Pattern a -> Pattern a -> Pattern a
+# --
+range "${1:pattern}" "${2:pattern}"

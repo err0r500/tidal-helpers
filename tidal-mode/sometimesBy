@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:sometimesBy
+# name:Pattern Double -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a  -- 0%
+# --
+never "${1:double}" ${2:func} 

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:jux
+# name:(ControlPattern -> ControlPattern) -> ControlPattern -> ControlPattern
+# --
+jux ( ${1:funcPattern} ) 

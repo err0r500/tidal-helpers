@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:weave
+# name:Time -> ControlPattern -> [ControlPattern] -> ControlPattern
+# --
+weave ${1:time} "${2:pattern}" 

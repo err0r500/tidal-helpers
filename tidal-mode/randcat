@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:randcat
+# name:[Pattern a] -> Pattern a
+# --
+randcat [${1:pattern}]

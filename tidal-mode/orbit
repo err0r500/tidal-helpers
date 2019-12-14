@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:orbit
+# name:Pattern Int -> ControlPattern
+# --
+orbit "${1:int}" 

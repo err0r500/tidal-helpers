@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:segment
+# name:Pattern Time -> Pattern a -> Pattern a
+# --
+segment "${1:time}" 

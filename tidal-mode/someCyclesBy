@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:someCyclesBy
+# name:Double -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
+# --
+someCyclesBy ${1:double} ${2:func} 

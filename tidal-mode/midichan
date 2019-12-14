@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:midichan
+# name:Pattern Double -> ControlPattern
+# --
+midichan "${1:double}" 

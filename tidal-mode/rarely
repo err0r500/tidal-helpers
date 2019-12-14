@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:rarely
+# name:(Pattern a -> Pattern a) -> Pattern a -> Pattern a  -- 25%
+# --
+rarely ${1:func} 

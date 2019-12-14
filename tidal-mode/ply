@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:ply
+# name:Pattern Int -> Pattern a -> Pattern a
+# --
+ply "${1:int}" 

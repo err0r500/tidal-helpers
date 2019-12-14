@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:fix
+# name:(ControlPattern -> ControlPattern) -> ControlPattern -> ControlPattern -> ControlPattern
+# --
+fix ( ${1:func} ) "${2:pattern}" 

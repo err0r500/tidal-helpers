@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:degrade
+# name:Pattern a -> Pattern a
+# --
+degrade 

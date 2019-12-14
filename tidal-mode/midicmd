@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:midicmd
+# name:Pattern String -> ControlPattern
+# --
+midicmd "${1:string}" 

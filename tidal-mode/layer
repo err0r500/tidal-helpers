@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:layer
+# name:[a -> Pattern b] -> a -> Pattern b
+# --
+layer [ ${1:func} ] 

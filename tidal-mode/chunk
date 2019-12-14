@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:chunk
+# name:Int -> (Pattern b -> Pattern b) -> Pattern b -> Pattern b
+# --
+chunk ${1:int} (${2:func}) 

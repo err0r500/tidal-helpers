@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:speed
+# name:Pattern Double -> ControlPattern
+# --
+speed "${1:double}" 

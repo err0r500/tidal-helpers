@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:leslie
+# name:Pattern Double -> ControlPattern
+# --
+leslie "${1:double}" 

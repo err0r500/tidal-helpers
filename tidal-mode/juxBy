@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:juxBy
+# name:Pattern Double -> (ControlPattern -> ControlPattern) -> ControlPattern -> ControlPattern
+# --
+juxBy "${1:double}" ( ${2:funcPattern} ) 

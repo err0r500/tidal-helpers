@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:room
+# name:Pattern Double -> ControlPattern
+# --
+room "${1:double}" 

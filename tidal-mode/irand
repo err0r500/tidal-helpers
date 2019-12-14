@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:irand
+# name:Num a => Int -> Pattern a
+# --
+irand ${1:int} 

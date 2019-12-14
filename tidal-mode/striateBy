@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:striateBy
+# name:Pattern Int -> Patern Double -> ControlPattern -> ControlPattern
+# --
+striateBy "${1:int}" "${2:double}" 

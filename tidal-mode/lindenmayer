@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:lindenmayer
+# name:Num b => Int -> String -> String -> [b]
+# --
+lindenmayer ${1:int} ${2:string} 

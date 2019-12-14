@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:release
+# name:Pattern Double -> ControlPattern
+# --
+release "${1:double}" 
