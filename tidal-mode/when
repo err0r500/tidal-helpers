@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:when
+# name:(Int -> Bool) -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
+# --
+when (${1:funcBool}) (${2:funcPattern})

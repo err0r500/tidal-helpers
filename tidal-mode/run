@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:run
+# name:(Num a, Enum a) => Pattern a -> Pattern a
+# --
+run 

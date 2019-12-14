@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:delaytime
+# name:Pattern Double -> ControlPattern
+# --
+delaytime "${1:double}" 

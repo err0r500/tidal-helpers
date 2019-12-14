@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+#name : bootstrap
+#key : bootstrap
+#contributor : matth
+# --
+do
+  let mG = 1
+  let s1G = 0.5
+  let s2G = 0.5
+  let s1 = s ""
+         # orbit 0
+  let s2 = s ""
+         # orbit 1
+  d1 $ stack [ s1 # gain ( s1G * mG)
+             , s2 # gain ( s2G * mG)
+             ]
+
+hush

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:anticipate
+# name:Time -> [ControlPattern] -> ControlPattern
+# --
+accelerate "${1:double}"

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:gain
+# name:Pattern Double -> ControlPattern
+# --
+gain "${1:double}" 

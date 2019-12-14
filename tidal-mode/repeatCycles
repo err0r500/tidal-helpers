@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:repeatCycles
+# name:Int -> Pattern a -> Pattern a
+# --
+repeatCycles ${1:int} 

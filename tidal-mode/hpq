@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:hpq
+# name:Pattern Double -> ControlPattern
+# --
+hpq "${1:double}" 

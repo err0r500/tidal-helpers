@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:scan
+# name:(Num a, Enum a) => Pattern a -> Pattern a
+# --
+scan 

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:rot
+# name:Ord a => Pattern Int -> Pattern a -> Pattern a
+# --
+rot "${1:Int}" 

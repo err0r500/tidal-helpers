@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:cutoff
+# name:Pattern Double -> ControlPattern
+# --
+cutoff "${1:double}" 

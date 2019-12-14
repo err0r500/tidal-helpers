@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:chop
+# name:Pattern Int -> ControlPattern -> ControlPattern
+# --
+chop "${1:int}" 

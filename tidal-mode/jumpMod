@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:jumpMod
+# name:Show a => a -> Int -> ControlPattern -> IO ()
+# --
+jumpMod ${1:show} ${2:int} 

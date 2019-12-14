@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:bandq
+# name:Pattern Double -> ControlPattern
+# --
+bandq "${1:double}"

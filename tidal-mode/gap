@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:gap
+# name:Pattern Int -> ControlPattern -> ControlPattern
+# --
+gap "${1:int}" 

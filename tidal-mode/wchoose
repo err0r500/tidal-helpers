@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:wchoose
+# name:[(a, Double)] -> Pattern a
+# --
+wchoose [(${1:any}, ${2:double})] 

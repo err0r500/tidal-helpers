@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:stack
+# name:[Pattern a] -> Pattern a
+# --
+stack [${1:Pattern}, ${2:Pattern}] 

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:foldEvery
+# name:[Int] -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
+# --
+foldEvery [${1:Int}] ${2:func} 

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:every
+# name:Pattern Int -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
+# --
+every ${1:int} ${2:func}

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:slow
+# name:Pattern Time -> Pattern a -> Pattern a
+# --
+slow ${1:time} 

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:chooseBy
+# name:Pattern Double -> [a] -> Pattern a
+# --
+chooseBy "${1:doubles}" [${2:any}] 

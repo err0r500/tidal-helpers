@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:anticipate
+# name:Time -> [ControlPattern] -> ControlPattern
+# --
+anticipate ${1:time} [ "${2:double}" ]

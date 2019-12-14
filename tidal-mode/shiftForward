@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:~>
+# name:Pattern Time -> Pattern a -> Pattern a
+# --
+( "${1:time}" ~> )

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:zoom
+# name:(Time, Time) -> Pattern a -> Pattern a
+# --
+zoom (${1:time}, ${2:time}) 

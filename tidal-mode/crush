@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:crush
+# name:Pattern Double -> ControlPattern
+# --
+crush "${1:double}" 

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:append
+# name:Pattern a -> Pattern a -> Pattern a
+# --
+append 

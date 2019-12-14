@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:bandf
+# name:Pattern Double -> ControlPattern
+# --
+bandf "${1:double}"

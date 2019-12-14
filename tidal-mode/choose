@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:choose
+# name:[a] -> Pattern a
+# --
+choose [${1:any}] 

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:coarse
+# name:Pattern Int -> ControlPattern
+# --
+coarse "${1:int}" 

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:clutch
+# name:Time -> [Pattern a] -> Pattern a
+# --
+clutch ${1:time} [${2:pattern}]

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:delayfeedback
+# name:Pattern Double -> ControlPattern
+# --
+delayfeedback "${1:double}" 

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key:wchooseBy
+# name:Pattern Double -> [(a,Double)] -> Pattern a
+# --
+wChooseBy "${1:doubles}" [(${2:any}, ${3:double})] 
